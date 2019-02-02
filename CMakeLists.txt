@@ -24,5 +24,5 @@ find_package( OpenCV REQUIRED )
 
 target_link_libraries(mmaldemo mmal_core mmal_util mmal_vc_client vcos bcm_host)
 target_link_libraries(mmal_buffer_demo mmal_core mmal_util mmal_vc_client vcos bcm_host rt)
-target_link_libraries(mmal_opencv_demo mmal_core mmal_util mmal_vc_client vcos bcm_host ${OpenCV_LIBS} vgfont openmaxil EGL  pthread rt m freetype)
+target_link_libraries(mmal_opencv_demo mmal_core mmal_util mmal_vc_client vcos bcm_host ${OpenCV_LIBS} vgfont openmaxil brcmGLESv2 EGL brcmEGL pthread rt m freetype)
 target_link_libraries(mmal_video_record mmal_core mmal_util mmal_vc_client vcos bcm_host cairo rt)

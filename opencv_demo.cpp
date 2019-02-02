@@ -41,12 +41,12 @@ extern "C" {
 #define MMAL_CAMERA_CAPTURE_PORT 2
 
 typedef struct {
-    int32_t video_width;
-    int32_t video_height;
-    int32_t preview_width;
-    int32_t preview_height;
-    int32_t opencv_width;
-    int32_t opencv_height;
+    int video_width;
+    int video_height;
+    int preview_width;
+    int preview_height;
+    int opencv_width;
+    int opencv_height;
     float video_fps;
     MMAL_POOL_T *camera_video_port_pool;
     CvHaarClassifierCascade *cascade;
@@ -148,14 +148,14 @@ int main(int argc, char** argv) {
     printf("Display resolution = (%d, %d)\n", display_width, display_height);
 
     /* setup opencv */
-    userdata.cascade = (CvHaarClassifierCascade*) cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml", NULL, NULL, NULL);
+    userdata.cascade = (CvHaarClassifierCascade*) cvLoad("/home/root/opencv-3.4.3/data/haarcascades_cuda/haarcascade_frontalface_alt.xml", NULL, NULL, NULL);
     userdata.storage = cvCreateMemStorage(0);
     userdata.image = cvCreateImage(cvSize(userdata.video_width, userdata.video_height), IPL_DEPTH_8U, 1);
     userdata.image2 = cvCreateImage(cvSize(userdata.opencv_width, userdata.opencv_height), IPL_DEPTH_8U, 1);
     if (!userdata.cascade) {
         printf("Error: unable to load harrcascade\n");
     }
-    //printf("Load cascade at %d\n", userdata.cascade);
+    printf("Load cascade at %d\n", userdata.cascade);
 
     status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &camera);
     if (status != MMAL_SUCCESS) {
@@ -311,7 +311,7 @@ int main(int argc, char** argv) {
     GRAPHICS_RESOURCE_HANDLE img_overlay;
     GRAPHICS_RESOURCE_HANDLE img_overlay2;
 
-    gx_graphics_init("/opt/vc/src/hello_pi/hello_font");
+    gx_graphics_init(".");
 
     gx_create_window(0, userdata.opencv_width, userdata.opencv_height, GRAPHICS_RESOURCE_RGBA32, &img_overlay);
     gx_create_window(0, 500, 200, GRAPHICS_RESOURCE_RGBA32, &img_overlay2);
@@ -336,7 +336,6 @@ int main(int argc, char** argv) {
 
                 printf("  OpenCV Frame = %d, Framerate = %.2f fps \n", opencv_frames, fps);
             }
-
             graphics_resource_fill(img_overlay, 0, 0, GRAPHICS_RESOURCE_WIDTH, GRAPHICS_RESOURCE_HEIGHT, GRAPHICS_RGBA32(0, 0, 0, 0x00));
             graphics_resource_fill(img_overlay2, 0, 0, GRAPHICS_RESOURCE_WIDTH, GRAPHICS_RESOURCE_HEIGHT, GRAPHICS_RGBA32(0, 0, 0, 0x00));
 
@@ -363,7 +362,7 @@ int main(int argc, char** argv) {
 
                         }
                     } else {
-                        //printf("No Face detected\n");
+                        printf("No Face detected\n");
                     }
                 } else {
                     printf("!! Face detectiona failed !!\n");
