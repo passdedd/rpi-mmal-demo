@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 SET(COMPILE_DEFINITIONS -Werror)
 SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--copy-dt-needed-entries")
+set (CMAKE_CXX_FLAGS "-Wall -Wno-variadic-macros -std=c++11 -pedantic -g")
 
 include_directories(/sdc/raspberrypi/firmware-master/opt/vc/include)
 include_directories(/sdc/raspberrypi/firmware-master/opt/vc/include/interface/vcos/pthreads)
